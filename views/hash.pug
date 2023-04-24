@@ -16,16 +16,25 @@ block content
           label.col-sm-2.control-label(for='hash') #{__('Hash')}:
           .col-sm-10
             input#hash.form-control(type='text', disabled)
+            div.text-muted.p-4 #{__('Length: ')}
+              span#hash_length 
+              span #{__(' characters')}
 
   script.
     function getText(block, chain) {
       return $('#data').val();
     }
 
+    function updateHash() {
+      const hash = sha256();
+      $('#hash').val(hash);
+      $('#hash_length').text(hash.toString().length);
+    }
+
     $(function() {
       $('#data').bind('input propertychange', function() {
-        $('#hash').val(sha256());
+        updateHash();
       });
     });
-
-    $('#hash').val(sha256());
+    
+    updateHash();

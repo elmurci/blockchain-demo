@@ -15,5 +15,11 @@
 	"Tx": "Tx",
 	"$": "$",
 	"From": "From",
-	"Coinbase Transactions": "Coinbase Transactions"
+	"Coinbase Transactions": "Coinbase Transactions",
+	"pepe": "pepe",
+	"Length:": "Length:",
+	"Length": "Length",
+	"characters": "characters",
+	" characters": " characters",
+	"Length: ": "Length: "
 }
