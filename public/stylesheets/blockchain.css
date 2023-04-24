@@ -34,7 +34,7 @@ input {
 }
 
 .well-error {
-  background: rgb(250, 220, 220);
+  background: #eeeeee;
 }
 
 .blockchain-line {
@@ -74,4 +74,13 @@ input {
 
 .peer-last-block-info {
   margin-left: 10px;
+}
+
+.peer-summary-row {
+  margin-top: 6px;
+}
+
+.peer-summary {
+  float: none;
+  margin: 0 auto;
 }

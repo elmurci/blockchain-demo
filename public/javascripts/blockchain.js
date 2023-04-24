@@ -69,12 +69,11 @@ function updateChain(block, chain) {
 
 function mine(block, chain) {
   let result = false;
-  $('#block'+block+'chain'+chain+'nonce').val(block);
   if (!$('#block'+block+'chain'+chain+'previous').val())
     $('#block'+block+'chain'+chain+'previous').val(block !== 1 ? $('#block'+(block-1)+'chain'+chain+'hash').val() : '0000000000000000000000000000000000000000000000000000000000000000');
   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
   // If block is good
-  if ($('#block'+block+'chain'+chain+'previous').val() === $('#block'+(block-1)+'chain'+chain+'hash').val()) {
+  if ($('#block'+block+'chain'+chain+'previous').val() === $('#block'+(block-1)+'chain'+chain+'hash').val() || block === 1) {
     result = true;
     $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-bad').addClass('blockchain-line-good');
     $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');

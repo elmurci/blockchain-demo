@@ -3,11 +3,20 @@ extends layout
 block content
   .container-fluid
     h1 #{__('Distributed')}
+    .well.col-md-6.clearfix.peer-summary
+      div.peer-summary-text Peer A Chain's last valid block:
+        span.h5.peer-last-block-info.text-primary(id='peerAchain1last')
+            span(id='chain1last')
+      div.peer-summary Peer B Chain's last valid block:
+        span.h5.peer-last-block-info.text-primary(id='peerBchain2last')
+            span(id='chain2last')
+      div.peer-summary Peer C Chain's last valid block:
+        span.h5.peer-last-block-info.text-primary(id='peerCchain3last')
+            span(id='chain3last')
+    div.div.clearfix
     - let peers = {1: 'A', 2: 'B', 3: 'C'}
       each peer, chain in peers
         h3 #{__('Peer')} #{peer}
-          span.h5.peer-last-block-info.text-primary(id='peer'+peer+'chain'+chain+'last') #{__('Last Main Chain Block: ')}
-            span(id='chain'+chain+'last')
         .row.row-horizon
           - var blocks = []
           - blocks.push({block: 1, chain: chain, nonce: 139358, txs: [{value: '25.00', from: 'Brett', to: 'Javi'},{value: '4.27', from: 'Elizabeth', to: 'Jane'},{value: '19.22', from: 'Wickham', to: 'Lydia'},{value: '106.44', from: 'Lady Jan', to: 'Collins'},{value: '6.42', from: 'Charlotte', to: 'Elizabeth'}], previous: '0000000000000000000000000000000000000000000000000000000000000000'})
