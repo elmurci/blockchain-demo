@@ -9,7 +9,7 @@ div.blockchain-line.blockchain-line-good(id='block'+block.block+'chain'+block.ch
           span.input-group-addon #
           input.form-control(id='block'+block.block+'chain'+block.chain+'number', type='number', value=block.block)
 
-    .form-group
+    .form-group.hidden
       label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'nonce') #{__('Nonce')}:
       .col-sm-10
          input.form-control(id='block'+block.block+'chain'+block.chain+'nonce', type='text', value=block.nonce)
@@ -41,4 +41,4 @@ div.blockchain-line.blockchain-line-good(id='block'+block.block+'chain'+block.ch
         i.icon-spinner.icon-spin.icon-large
       .col-sm-10
         button.btn.btn-primary.ladda-button(id='block'+block.block+'chain'+block.chain+'mineButton', data-style='expand-right')
-          span.ladda-label #{__('Re Hash')}
+          span.ladda-label #{__('Hash')}

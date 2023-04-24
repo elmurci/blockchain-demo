@@ -38,7 +38,7 @@ input {
 }
 
 .blockchain-line {
-  border: 4px solid #BDBDBD;
+  border: 8px solid #BDBDBD;
   width: 100%;
   margin-top: 200px;
   position: absolute;
@@ -46,9 +46,27 @@ input {
 }
 
 .blockchain-line-good {
-  border: 4px solid #4CAF50;
+  border: 8px solid #4CAF50;
 }
 
 .blockchain-line-bad {
-  border: 4px solid #ffffff;
+  border: 8px solid #ffffff;
+}
+
+.header-logo {
+  padding: 5px;
+}
+
+.header-text {
+  top: -10px;
+  margin-left: 8px;
+  position: relative;
+}
+
+.navbar {
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.nav li.active {
+  background: #eeeeee;
 }

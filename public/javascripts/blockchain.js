@@ -66,9 +66,9 @@ function updateChain(block, chain) {
     if (x > 1) {
       // $('#block'+x+'chain'+chain+'previous').val($('#block'+(x-1).toString()+'chain'+chain+'hash').val());
     }
-    if (x >= block) {
+    if (x > block) {
       $('#block'+x+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
-      $('#block'+x+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
+      $('#block'+(x-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
     }
     // console.log($('#block'+x+'chain'+chain+'previous').val(), "!==", $('#block'+(x-1).toString()+'chain'+chain+'hash').val())
     // if ((invalidBlocksFrom > 0 && x > invalidBlocksFrom) || $('#block'+x+'chain'+chain+'previous').val() !== $('#block'+(x-1).toString()+'chain'+chain+'hash').val()) {
@@ -81,7 +81,7 @@ function updateChain(block, chain) {
     //   // updateHash(x, chain);
     // }
   }
-  $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
+  //$('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
 }
 
 function mine(block, chain, isChain) {
@@ -90,7 +90,6 @@ function mine(block, chain, isChain) {
   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
   $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
   $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-bad').addClass('blockchain-line-good');
-  console.log("PAOC", '#block'+(block-1)+'chain'+chain+'line')
   // for (var x = 0; x <= maximumNonce; x++) {
   //   $('#block'+block+'chain'+chain+'nonce').val(x);
   //   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
