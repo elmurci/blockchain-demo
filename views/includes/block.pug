@@ -1,4 +1,5 @@
-.well(id='block'+block.block+'chain'+block.chain+'well')
+div.blockchain-line.blockchain-line-good(id='block'+block.block+'chain'+block.chain+'line')
+.well.blockchain-block(id='block'+block.block+'chain'+block.chain+'well')
   form.form-horizontal
 
     .form-group
@@ -8,7 +9,7 @@
           span.input-group-addon #
           input.form-control(id='block'+block.block+'chain'+block.chain+'number', type='number', value=block.block)
 
-    .form-group
+    .form-group.hidden
       label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'nonce') #{__('Nonce')}:
       .col-sm-10
          input.form-control(id='block'+block.block+'chain'+block.chain+'nonce', type='text', value=block.nonce)
@@ -33,4 +34,4 @@
         i.icon-spinner.icon-spin.icon-large
       .col-sm-10
         button.btn.btn-primary.ladda-button(id='block'+block.block+'chain'+block.chain+'mineButton', data-style='expand-right')
-          span.ladda-label #{__('Mine')}
+          span.ladda-label #{__('Re Hash')}

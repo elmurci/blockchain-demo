@@ -2,8 +2,8 @@ extends layout
 
 block content
   .container-fluid
-    h1 #{__('Blockchain')}
-    .row.row-horizon
+    h1 #{__('Chain of Blocks')}
+    div#blockchain.row.row-horizon
       - var blocks = []
       - blocks.push({block: 1, chain: 1, nonce: 11316, previous: '0000000000000000000000000000000000000000000000000000000000000000'})
       - blocks.push({block: 2, chain: 1, nonce: 35230, previous: '000015783b764259d382017d91a36d206d0600e2cbb3567748f46a33fe9297cf'})

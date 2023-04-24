@@ -21,5 +21,7 @@
 	"Length": "Length",
 	"characters": "characters",
 	" characters": " characters",
-	"Length: ": "Length: "
+	"Length: ": "Length: ",
+	"Re Hash": "Re Hash",
+	"Chain of Blocks": "Chain of Blocks"
 }

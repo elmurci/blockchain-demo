@@ -45,41 +45,62 @@ function sha256(block, chain) {
 function updateState(block, chain) {
   // set the well background red or green for this block
   if ($('#block'+block+'chain'+chain+'hash').val().substr(0, patternLen) <= pattern) {
-      $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
+    $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
   }
   else {
-      $('#block'+block+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
+    $('#block'+block+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
   }
 }
 
-function updateHash(block, chain) {
+function updateHash(block, chain, update = true) {
   // update the SHA256 hash value for this block
   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
-  updateState(block, chain);
+  if (update) updateState(block, chain);
 }
 
 function updateChain(block, chain) {
+  let invalidBlocksFrom = -1;
   // update all blocks walking the chain from this block to the end
+  console.log("updateChain", block, chain)
   for (var x = block; x <= 5; x++) {
     if (x > 1) {
-      $('#block'+x+'chain'+chain+'previous').val($('#block'+(x-1).toString()+'chain'+chain+'hash').val());
+      // $('#block'+x+'chain'+chain+'previous').val($('#block'+(x-1).toString()+'chain'+chain+'hash').val());
     }
-    updateHash(x, chain);
+    if (x >= block) {
+      $('#block'+x+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
+      $('#block'+x+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
+    }
+    // console.log($('#block'+x+'chain'+chain+'previous').val(), "!==", $('#block'+(x-1).toString()+'chain'+chain+'hash').val())
+    // if ((invalidBlocksFrom > 0 && x > invalidBlocksFrom) || $('#block'+x+'chain'+chain+'previous').val() !== $('#block'+(x-1).toString()+'chain'+chain+'hash').val()) {
+    //   console.log('#block'+x+'chain'+chain+'well', 'RED')
+    //   $('#block'+x+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
+    //   // All the blocks in read from now on
+    //   invalidBlocksFrom = x;
+    //   // (x, chain, false);
+    // } else {
+    //   // updateHash(x, chain);
+    // }
   }
+  $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
 }
 
 function mine(block, chain, isChain) {
-  for (var x = 0; x <= maximumNonce; x++) {
-    $('#block'+block+'chain'+chain+'nonce').val(x);
-    $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
-    if ($('#block'+block+'chain'+chain+'hash').val().substr(0, patternLen) <= pattern) {
-      if (isChain) {
-        updateChain(block, chain);
-      }
-      else {
-        updateState(block, chain);
-      }
-      break;
-    }
-  }
+  $('#block'+block+'chain'+chain+'nonce').val(block);
+  $('#block'+block+'chain'+chain+'previous').val(block !== 1 ? $('#block'+(block-1)+'chain'+chain+'hash').val() : '0000000000000000000000000000000000000000000000000000000000000000');
+  $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
+  $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
+  $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-bad').addClass('blockchain-line-good');
+  console.log("PAOC", '#block'+(block-1)+'chain'+chain+'line')
+  // for (var x = 0; x <= maximumNonce; x++) {
+  //   $('#block'+block+'chain'+chain+'nonce').val(x);
+  //   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
+    
+  //   // if (isChain) {
+  //   //   updateChain(block, chain);
+  //   // }
+  //   // else {
+  //   //   updateState(block, chain);
+  //   // }
+  //   break;
+  // }
 }
