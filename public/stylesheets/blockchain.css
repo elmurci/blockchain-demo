@@ -65,8 +65,13 @@ input {
 
 .navbar {
   border-bottom: 1px solid #E0E0E0;
+  background: white;
 }
 
 .nav li.active {
   background: #eeeeee;
+}
+
+.peer-last-block-info {
+  margin-left: 10px;
 }

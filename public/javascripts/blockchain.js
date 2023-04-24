@@ -2,8 +2,10 @@
 // global variable setup
 /////////////////////////
 
+let lastBlocks = {};
+
 // number of zeros required at front of hash
-var difficultyMajor = 4;
+let difficultyMajor = 4;
 
 // 0-15, maximum (decimal) value of the hex digit after the front
 // 15 means any hex character is allowed next
@@ -11,10 +13,10 @@ var difficultyMajor = 4;
 //    (so the bit-strength is doubled)
 // 0  means only 0x0 can be next
 //    (equivalent to one more difficultyMajor)
-var difficultyMinor = 15;  
+let difficultyMinor = 15;  
 
-var maximumNonce = 8;  // limit the nonce so we don't mine too long
-var pattern = '';
+let maximumNonce = 8;  // limit the nonce so we don't mine too long
+let pattern = '';
 for (var x=0; x<difficultyMajor; x++) {
   pattern += '0';     // every additional required 0
   maximumNonce *= 16; // takes 16x longer to mine
@@ -43,11 +45,9 @@ function sha256(block, chain) {
 }
 
 function updateState(block, chain) {
-  // set the well background red or green for this block
-  if ($('#block'+block+'chain'+chain+'hash').val().substr(0, patternLen) <= pattern) {
+  if ($('#block'+block+'chain'+chain+'previous').val() === $('#block'+(block-1)+'chain'+chain+'hash').val() || block === 1) {
     $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
-  }
-  else {
+  } else {
     $('#block'+block+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
   }
 }
@@ -59,47 +59,29 @@ function updateHash(block, chain, update = true) {
 }
 
 function updateChain(block, chain) {
-  let invalidBlocksFrom = -1;
-  // update all blocks walking the chain from this block to the end
-  console.log("updateChain", block, chain)
-  for (var x = block; x <= 5; x++) {
-    if (x > 1) {
-      // $('#block'+x+'chain'+chain+'previous').val($('#block'+(x-1).toString()+'chain'+chain+'hash').val());
-    }
+  for (let x = block; x <= 5; x++) {
     if (x > block) {
       $('#block'+x+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
       $('#block'+(x-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
     }
-    // console.log($('#block'+x+'chain'+chain+'previous').val(), "!==", $('#block'+(x-1).toString()+'chain'+chain+'hash').val())
-    // if ((invalidBlocksFrom > 0 && x > invalidBlocksFrom) || $('#block'+x+'chain'+chain+'previous').val() !== $('#block'+(x-1).toString()+'chain'+chain+'hash').val()) {
-    //   console.log('#block'+x+'chain'+chain+'well', 'RED')
-    //   $('#block'+x+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
-    //   // All the blocks in read from now on
-    //   invalidBlocksFrom = x;
-    //   // (x, chain, false);
-    // } else {
-    //   // updateHash(x, chain);
-    // }
   }
-  //$('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
 }
 
-function mine(block, chain, isChain) {
+function mine(block, chain) {
+  let result = false;
   $('#block'+block+'chain'+chain+'nonce').val(block);
-  $('#block'+block+'chain'+chain+'previous').val(block !== 1 ? $('#block'+(block-1)+'chain'+chain+'hash').val() : '0000000000000000000000000000000000000000000000000000000000000000');
+  if (!$('#block'+block+'chain'+chain+'previous').val())
+    $('#block'+block+'chain'+chain+'previous').val(block !== 1 ? $('#block'+(block-1)+'chain'+chain+'hash').val() : '0000000000000000000000000000000000000000000000000000000000000000');
   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
-  $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
-  $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-bad').addClass('blockchain-line-good');
-  // for (var x = 0; x <= maximumNonce; x++) {
-  //   $('#block'+block+'chain'+chain+'nonce').val(x);
-  //   $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
-    
-  //   // if (isChain) {
-  //   //   updateChain(block, chain);
-  //   // }
-  //   // else {
-  //   //   updateState(block, chain);
-  //   // }
-  //   break;
-  // }
+  // If block is good
+  if ($('#block'+block+'chain'+chain+'previous').val() === $('#block'+(block-1)+'chain'+chain+'hash').val()) {
+    result = true;
+    $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-bad').addClass('blockchain-line-good');
+    $('#block'+block+'chain'+chain+'well').removeClass('well-error').addClass('well-success');
+  } else {
+    $('#block'+(block-1)+'chain'+chain+'line').removeClass('blockchain-line-good').addClass('blockchain-line-bad');
+    $('#block'+block+'chain'+chain+'well').removeClass('well-success').addClass('well-error');
+  }
+  updateChain(block, chain);
+  return result;
 }

@@ -23,5 +23,7 @@
 	" characters": " characters",
 	"Length: ": "Length: ",
 	"Re Hash": "Re Hash",
-	"Chain of Blocks": "Chain of Blocks"
+	"Chain of Blocks": "Chain of Blocks",
+	"Last Main Chain Block:": "Last Main Chain Block:",
+	"Last Main Chain Block: ": "Last Main Chain Block: "
 }
