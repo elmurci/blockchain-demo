@@ -4,7 +4,7 @@ block content
   .container-fluid
     h1 #{__('Chain of Blocks')}
     div#blockchain.row.row-horizon
-      - var blocks = []
+      - let blocks = []
       - blocks.push({block: 1, chain: 1, nonce: 11316, previous: '0000000000000000000000000000000000000000000000000000000000000000'})
       - blocks.push({block: 2, chain: 1, nonce: 35230, previous: ''})
       - blocks.push({block: 3, chain: 1, nonce: 12937, previous: ''})

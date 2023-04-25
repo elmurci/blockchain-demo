@@ -84,3 +84,8 @@ input {
   float: none;
   margin: 0 auto;
 }
+
+.footer {
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
